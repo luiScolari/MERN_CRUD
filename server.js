@@ -33,9 +33,13 @@ app.patch("/tweets/api/:id", async (req, res) => {
 });
 
 app.post("/tweets/api/new", async (req, res) => {
-  console.log(req.body)
-  const newTweet = new Tweets(req.body);
-  newTweet.save();
+  const { username, text } = req.body;
+  if (username && text) {
+    const newTweet = new Tweets(req.body);
+    newTweet.save();
+  } else {
+    console.log("Throw error"); // Throw some error later
+  }
 });
 
 app.listen(5000, () => {
