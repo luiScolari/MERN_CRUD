@@ -1,41 +1,27 @@
 // React imports
-import React from 'react'
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from 'react';
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 // Importing dependencies
-import axios from 'axios'
-
-
-
+import axios from "axios";
 
 const TweetDetails = () => {
-    const [tweet, setTweet] = useState([])
-    const { id } = useParams()
+  const { state } = useLocation();
 
-    // handleDetailsClick = () => {
-    //     const fetchData = async () => {
-    //         const { data } = await axios.get(`/tweets/api/${id}`)
-    //         // console.log(data)
-    //         setTweet(data)
-    //     }
-    //     fetchData()
-    // }
-    // Sending the id backend to search in the database
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         const { data } = await axios.get(`/tweets/api/${id}`)
-    //         // console.log(data)
-    //         setTweet(data)
-    //     }
-    //     fetchData()
-    // })
-    return (
-        <>
-            {tweet.username}
-            <a href="/tweet/edit">Edit tweet</a>
-        </>
-    );
-}
+  return (
+    <>
+      {state.tweet._id}
+      <button>
+        <Link
+          to={`/tweets/${state.tweet._id}/edit`}
+          state={{ tweet: state.tweet }}
+        >
+          Edit tweet
+        </Link>
+      </button>
+    </>
+  );
+};
 
 export default TweetDetails;

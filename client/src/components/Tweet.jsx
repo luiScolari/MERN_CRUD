@@ -1,17 +1,16 @@
-import React from 'react'
+import React from "react";
 
-const Tweet = ({ tweets, handleDetailsClick }) => {
+import { Link } from "react-router-dom";
 
-    return <>
-        {tweets.map((value) => (
-            <div>
-                <button href={`tweets/${value._id}`} onClick={handleDetailsClick}></button>
-                {/* < onclick={handleDetailsClick} href={`tweets/${value._id}`}><span>{value.username}-</span></a> */}
-                <div>{value.text}</div>
-                <p></p>
-            </div>
-        ))}
+const Tweet = ({ tweet }) => {
+  return (
+    <>
+      <Link to={`/tweets/${tweet._id}`} state={{ tweet: tweet }}>
+        {tweet.username}
+      </Link>
+      <div>{tweet.text}</div>
     </>
-}
+  );
+};
 
 export default Tweet;

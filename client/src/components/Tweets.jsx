@@ -1,38 +1,37 @@
 // React imports
-import React from 'react'
-import { useEffect, useState } from 'react';
-// Router
-import { BrowserRouter, Router, Route } from 'react-router-dom'
+import React from "react";
+import { useEffect, useState } from "react";
+
+import { Link } from 'react-router-dom';
 
 // Importing dependencies
-import axios from 'axios'
+import axios from "axios";
 
 // Importing components
-import Tweet from './Tweet'
+import Tweet from "./Tweet";
 
-const Index = () => {
-    const [tweets, setTweets] = useState([])
+const Tweets = () => {
+  const [tweets, setTweets] = useState([]);
 
-    const handleDetailsClick = () => {
-        const fetchData = async () => {
-            const { data } = await axios.get(`/tweets/api`)
-            console.log(data)
-        }
-        fetchData()
-    }
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await axios.get("/tweets/api");
+      setTweets(data);
+    };
+    fetchData();
+  });
+  
+  return (
+    <>
+      {!!tweets &&
+        tweets.map((tweet) => (
+          <div>
+            <Tweet tweet={tweet} />
+          </div>
+        ))}
+        <Link to={"/tweets/new"}>Create new tweet</Link>
+    </>
+  );
+};
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const { data } = await axios.get('/tweets/api')
-            // console.log(data)
-            setTweets(data)
-            // console.log(tweets)
-        }
-        fetchData()
-    })
-    return (
-        <Tweet handleDetailsClick={handleDetailsClick} tweets={tweets}/>
-    );
-}
-
-export default Index;
+export default Tweets;

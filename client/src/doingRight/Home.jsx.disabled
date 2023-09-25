@@ -1,0 +1,41 @@
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const Home = () => {
+  return (
+    <>
+      <Tweets />
+    </>
+  );
+};
+
+const Tweets = () => {
+  const [tweets, setTweets] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await axios.get("/tweets/api");
+      setTweets(data);
+    };
+    fetchData();
+  }, []);
+
+  return <>{!!tweets && tweets.map((tweet) => <Tweet tweet={tweet} />)}</>;
+};
+
+const Tweet = ({ tweet }) => {
+  const navigate = useNavigate();
+
+  const navigateToDetails = () => {
+    navigate(`/tweets/${tweet._id}`);
+  };
+
+  return (
+    <div>
+      <button onClick={navigateToDetails}>{tweet.username}</button>
+    </div>
+  );
+};
+
+export default Home;

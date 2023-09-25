@@ -1,15 +1,25 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
 module.exports = function (app) {
-  app.use(
-    '/tweets/api',
+  app.get(
+    "/tweets/api",
     createProxyMiddleware({
-      target: 'http://localhost:5000',
+      target: "http://localhost:5000",
       changeOrigin: true,
-    })),
-    app.post('/new', createProxyMiddleware({
-      target: 'http://localhost:5000',
-      changeOrigin: true,
-    }))
-    ;
+    })
+  ),
+    app.post(
+      "/tweets/api/new",
+      createProxyMiddleware({
+        target: "http://localhost:5000",
+        changeOrigin: true,
+      })
+    ),
+    app.patch(
+      "/tweets/api/:id",
+      createProxyMiddleware({
+        target: "http://localhost:5000",
+        changeOrigin: true,
+      })
+    );
 };
