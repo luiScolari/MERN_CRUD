@@ -7,6 +7,7 @@ import { redirect, useLocation, useNavigate } from "react-router-dom";
 // '/tweets/api/:id'
 
 const EditTweet = () => {
+  console.log("Eu passei aqui!");
   const { state } = useLocation();
   const [tweet, setTweet] = useState("");
   const navigate = useNavigate();
