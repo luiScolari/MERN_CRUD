@@ -6,9 +6,12 @@ const Tweets = require("./schema");
 
 const { v4: uuidv4 } = require("uuid");
 
-const jao = uuidv4();
+const { auth } = require("express-openid-connect");
+
+const cors = require("cors");
 
 app.use(express.json());
+app.use(cors())
 
 mongoose
   .connect("mongodb://localhost:27017/reactCRUD", {})
@@ -20,19 +23,19 @@ mongoose
     console.log(err);
   });
 
-app.get("/tweets/api", async (req, res) => {
+app.get("/tweets", async (req, res) => {
   const tweets = await Tweets.find({});
   res.send(tweets);
 });
 
-app.patch("/tweets/api/:id", async (req, res) => {
+app.patch("/tweets/:id", async (req, res) => {
   const { text } = req.body;
   const { id } = req.params;
 
   await Tweets.findByIdAndUpdate(id, { text });
 });
 
-app.post("/tweets/api/new", async (req, res) => {
+app.post("/tweets/new", async (req, res) => {
   const { username, text } = req.body;
   if (username && text) {
     const newTweet = new Tweets(req.body);

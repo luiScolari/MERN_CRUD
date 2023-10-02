@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import axios from "axios";
-
+import instance from "../axiosInstance";
 import { redirect, useLocation, useNavigate } from "react-router-dom";
-
-// '/tweets/api/:id'
 
 const EditTweet = () => {
   console.log("Eu passei aqui!");
@@ -23,9 +20,9 @@ const EditTweet = () => {
 
   const handleInputSubmit = () => {
     const patchData = async () => {
-      await axios({
+      await instance({
         method: "PATCH",
-        url: `/tweets/api/${state.tweet._id}`,
+        url: `/tweets/${state.tweet._id}`,
         data: {
           text: tweet,
         },
@@ -35,8 +32,8 @@ const EditTweet = () => {
       });
     };
     patchData();
-    navigate("/tweets")
-};
+    navigate("/tweets");
+  };
 
   return (
     <>
