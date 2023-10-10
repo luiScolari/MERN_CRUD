@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import instance from "../axiosInstance";
-import { redirect, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const EditTweet = () => {
   console.log("Eu passei aqui!");
@@ -30,9 +30,13 @@ const EditTweet = () => {
           "Content-type": "application/json",
         },
       });
+      navigate("/tweets");
     };
-    patchData();
-    navigate("/tweets");
+    try {
+      patchData();
+    } catch (e) {
+      console.log("Error: ", e);
+    }
   };
 
   return (

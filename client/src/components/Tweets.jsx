@@ -1,13 +1,10 @@
-// React imports
 import React from "react";
 import { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 
-// Importing components
 import Tweet from "./Tweet";
 
-// Axios
 import instance from "../axiosInstance";
 
 const Tweets = () => {

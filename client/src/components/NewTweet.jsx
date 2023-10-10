@@ -16,9 +16,9 @@ const NewTweet = () => {
     console.log(newTweet);
   };
 
-  const handleNewTweet = () => {
-    // Error on frontend console and not rendering the /tweets updated
+  const handleNewTweet = async () => {
     const postData = async () => {
+      console.log(newTweet);
       await instance({
         method: "POST",
         url: "/tweets/new",
@@ -27,9 +27,13 @@ const NewTweet = () => {
           "Content-type": "application/json",
         },
       });
+      navigate("/tweets");
     };
-    postData();
-    navigate("/tweets");
+    try {
+      postData();
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

@@ -4,14 +4,10 @@ const mongoose = require("mongoose");
 
 const Tweets = require("./schema");
 
-const { v4: uuidv4 } = require("uuid");
-
-const { auth } = require("express-openid-connect");
-
 const cors = require("cors");
 
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 
 mongoose
   .connect("mongodb://localhost:27017/reactCRUD", {})
@@ -24,25 +20,34 @@ mongoose
   });
 
 app.get("/tweets", async (req, res) => {
-  const tweets = await Tweets.find({});
-  res.send(tweets);
+  try {
+    const tweets = await Tweets.find({});
+    res.send(tweets);
+  } catch (e) {
+    console.log("Error: ", e);
+  }
 });
 
 app.patch("/tweets/:id", async (req, res) => {
-  const { text } = req.body;
-  const { id } = req.params;
-
-  await Tweets.findByIdAndUpdate(id, { text });
+  try {
+    const { text } = req.body;
+    const { id } = req.params;
+    await Tweets.findByIdAndUpdate(id, { text });
+    res.send("Tweet updated");
+  } catch (e) {
+    console.log("Error: ", e);
+  }
 });
 
 app.post("/tweets/new", async (req, res) => {
-  const { username, text } = req.body;
-  if (username && text) {
+  try {
     const newTweet = new Tweets(req.body);
-    newTweet.save();
-  } else {
-    console.log("Throw error"); // Throw some error later
+    await newTweet.save();
+    res.send("New tweet saved");
+  } catch (e) {
+    console.log("Error: ", e);
   }
+  console.log(req.body);
 });
 
 app.listen(5000, () => {
