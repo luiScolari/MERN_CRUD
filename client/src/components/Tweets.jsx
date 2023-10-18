@@ -27,7 +27,7 @@ const Tweets = () => {
     <>
       {!!tweets &&
         tweets.map((tweet) => (
-          <div>
+          <div className="tweet py-2 px-4 border rounded w-96 mb-4 flex flex-col">
             <Tweet tweet={tweet} />
           </div>
         ))}
