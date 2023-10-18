@@ -50,6 +50,16 @@ app.post("/tweets/new", async (req, res) => {
   console.log(req.body);
 });
 
+app.delete("/tweets/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Tweets.findByIdAndDelete(id);
+    res.send("Tweet deleted");
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 app.listen(5000, () => {
   console.log("listening to port 5000");
 });
